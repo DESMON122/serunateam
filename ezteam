@@ -1,0 +1,172 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Seruna Hub Free Script By.Nattapat", "GrapeTheme")
+local Tab = Window:NewTab("Farm")
+local Section = Tab:NewSection("menu")
+Section:NewToggle("Auto Farm", "Cilck to farm", function(state)
+getgenv().TreasureAutoFarm = {
+    Enabled = true, -- // Toggle the auto farm on and off
+    Teleport = 2, -- // How fast between each teleport between the stages and stuff
+    TimeBetweenRuns = 5 -- // How long to wait until it goes to the next run
+}
+
+-- // Services
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local Lighting = game:GetService("Lighting")
+
+-- // Vars
+local LocalPlayer = Players.LocalPlayer
+
+-- // Goes through all of the stages
+local autoFarm = function(currentRun)
+    -- // Variables
+    local Character = LocalPlayer.Character
+    local NormalStages = Workspace.BoatStages.NormalStages
+
+    -- // Go to each stage thing
+    for i = 1, 10 do
+        local Stage = NormalStages["CaveStage" .. i]
+        local DarknessPart = Stage:FindFirstChild("DarknessPart")
+
+        if (DarknessPart) then
+            -- // Teleport to next stage
+            print("Teleporting to next stage: Stage " .. i)
+            Character.HumanoidRootPart.CFrame = DarknessPart.CFrame
+
+            -- // Create a temp part under you
+            local Part = Instance.new("Part", LocalPlayer.Character)
+            Part.Anchored = true
+            Part.Position = LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(0, 6, 0)
+
+            -- // Wait and remove temp part
+            wait(getgenv().TreasureAutoFarm.Teleport)
+            Part:Destroy()
+        end
+    end
+
+    -- // Go to end
+    print("Teleporting to the end")
+    repeat wait()
+        Character.HumanoidRootPart.CFrame = NormalStages.TheEnd.GoldenChest.Trigger.CFrame
+    until Lighting.ClockTime ~= 14
+
+    -- // Wait until you have respawned
+    local Respawned = false
+    local Connection
+    Connection = LocalPlayer.CharacterAdded:Connect(function()
+        Respawned = true
+        Connection:Disconnect()
+    end)
+
+    repeat wait() until Respawned
+    wait(getgenv().TreasureAutoFarm.TimeBetweenRuns)
+    print("Auto Farm: Run " .. currentRun .. " finished")
+end
+
+-- // Whilst the autofarm is enable, constantly do it
+local autoFarmRun = 1
+while wait() do
+    if (getgenv().TreasureAutoFarm.Enabled) then
+        print("Initialising Auto Farm: Run " .. autoFarmRun)
+        autoFarm(autoFarmRun)
+        autoFarmRun = autoFarmRun + 1
+    end
+end
+end)
+Section:NewToggle("Anti AFK", "Cilck to Anti Afk", function(state)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/peatchXD/Roblox-Script-AFK/main/Script%20AFK.lua"))()
+end)
+
+local Section = Tab:NewSection("Misc")
+Section:NewToggle("Fake Gold", "Cilck to Anti Fake Gold", function(state)
+game.Players.LocalPlayer.Data.Gold.Value = 99999999
+end)
+Section:NewToggle("Fake All", "Cilck to Fake All", function(state)
+game.Players.LocalPlayer.Data.Cannon.Value = 9999999
+game.Players.LocalPlayer.Data.TNT.Value = 9999999
+game.Players.LocalPlayer.Data.WoodRod.Value = 9999999
+game.Players.LocalPlayer.Data.Throne.Value = 9999999
+game.Players.LocalPlayer.Data.Step.Value = 9999999
+game.Players.LocalPlayer.Data.Truss.Value = 9999999
+game.Players.LocalPlayer.Data.Wedge.Value = 9999999
+game.Players.LocalPlayer.Data.CornerWedge.Value = 9999999
+game.Players.LocalPlayer.Data.Seat.Value = 9999999
+game.Players.LocalPlayer.Data.Mast.Value = 9999999
+game.Players.LocalPlayer.Data.Flag.Value = 9999999
+game.Players.LocalPlayer.Data.Window.Value = 9999999
+game.Players.LocalPlayer.Data.StoneBlock.Value = 9999999
+game.Players.LocalPlayer.Data.StoneRod.Value = 9999999
+game.Players.LocalPlayer.Data.RustedRod.Value = 9999999
+game.Players.LocalPlayer.Data.RustedBlock.Value = 9999999
+game.Players.LocalPlayer.Data.MetalRod.Value = 9999999
+game.Players.LocalPlayer.Data.ConcreteRod.Value = 9999999
+game.Players.LocalPlayer.Data.MetalBlock.Value = 9999999
+game.Players.LocalPlayer.Data.MarbleRod.Value = 9999999
+game.Players.LocalPlayer.Data.TitaniumRod.Value = 9999999
+game.Players.LocalPlayer.Data.ConcreteBlock.Value = 9999999
+game.Players.LocalPlayer.Data.MarbleBlock.Value = 9999999
+game.Players.LocalPlayer.Data.TitaniumBlock.Value = 9999999
+game.Players.LocalPlayer.Data.Chair.Value = 9999999
+game.Players.LocalPlayer.Data.Torch.Value = 9999999
+game.Players.LocalPlayer.Data.YellowChest.Value = 9999999
+game.Players.LocalPlayer.Data.LifePreserver.Value = 9999999
+game.Players.LocalPlayer.Data.HarpoonDragon.Value = 9999999
+game.Players.LocalPlayer.Data.SnowballTurret.Value = 9999999
+game.Players.LocalPlayer.Data.CandyCaneSwordMount.Value = 9999999
+game.Players.LocalPlayer.Data.TrowelTool.Value = 9999999
+game.Players.LocalPlayer.Data.SmoothWoodBlock.Value = 9999999
+game.Players.LocalPlayer.Data.CannonEgg.Value = 9999999
+game.Players.LocalPlayer.Data.FrontWheelCookie.Value = 9999999
+game.Players.LocalPlayer.Data.BackWheelMint.Value = 9999999
+game.Players.LocalPlayer.Data.BackWheelCookie.Value = 9999999
+game.Players.LocalPlayer.Data.HugeBackWheel.Value = 9999999
+game.Players.LocalPlayer.Data.HugeFrontWheel.Value = 9999999
+game.Players.LocalPlayer.Data.SwitchBig.Value = 9999999
+game.Players.LocalPlayer.Data.Note.Value = 9999999
+game.Players.LocalPlayer.Data.Switch.Value = 9999999
+game.Players.LocalPlayer.Data.Hinge.Value = 9999999
+game.Players.LocalPlayer.Data.Camera.Value = 9999999
+game.Players.LocalPlayer.Data.FrontWheel.Value = 9999999
+game.Players.LocalPlayer.Data.CameraDome.Value = 9999999
+game.Players.LocalPlayer.Data.FireworkC.Value = 9999999
+game.Players.LocalPlayer.Data.JetPackUltra.Value = 9999999
+game.Players.LocalPlayer.Data.JetPackSteampunk.Value = 9999999
+game.Players.LocalPlayer.Data.JetPackStar.Value = 9999999
+game.Players.LocalPlayer.Data.JetPackEaster.Value = 9999999
+game.Players.LocalPlayer.Data.JetPack.Value = 9999999
+game.Players.LocalPlayer.Data.TreasureMedium.Value = 9999999
+game.Players.LocalPlayer.Data.TreasureLarge.Value = 9999999
+game.Players.LocalPlayer.Data.BoatMotorWinter.Value = 9999999
+game.Players.LocalPlayer.Data.BoatMotorUltra.Value = 9999999
+game.Players.LocalPlayer.Data.CannonTurret.Value = 9999999
+game.Players.LocalPlayer.Data.DualCaneHarpoon.Value = 9999999
+game.Players.LocalPlayer.Data.BackWheel.Value = 9999999
+game.Players.LocalPlayer.Data.DragonEgg.Value = 9999999
+game.Players.LocalPlayer.Data.ChestCommon.Value = 9999999
+game.Players.LocalPlayer.Data.ChestLegendary.Value = 9999999
+game.Players.LocalPlayer.Data.ChestEpic.Value = 9999999
+game.Players.LocalPlayer.Data.ChestRare.Value = 9999999
+game.Players.LocalPlayer.Data.CandyOrange.Value = 9999999
+game.Players.LocalPlayer.Data.CandyBlue.Value = 9999999
+game.Players.LocalPlayer.Data.Candle.Value = 9999999
+game.Players.LocalPlayer.Data.Cake.Value = 9999999
+game.Players.LocalPlayer.Data.Lever.Value = 9999999
+game.Players.LocalPlayer.Data.GoldBlock.Value = 9999999
+game.Players.LocalPlayer.Data.PaintingTool.Value = 9999999
+game.Players.LocalPlayer.Data.BindTool.Value = 9999999
+game.Players.LocalPlayer.Data.ScalingTool.Value = 9999999
+game.Players.LocalPlayer.Data.BalloonBlock.Value = 9999999
+game.Players.LocalPlayer.Data.BalloonStarBlock.Value = 9999999
+game.Players.LocalPlayer.Data.JetTurbine.Value = 9999999
+game.Players.LocalPlayer.Data.Harpoon.Value = 9999999
+game.Players.LocalPlayer.Data.HarpoonGold.Value = 9999999
+game.Players.LocalPlayer.Data.YellowChest.Value = 9999999
+game.Players.LocalPlayer.Data['Steel I-Beam'].Value = 9999999
+end)
+Section:NewToggle("Remove Fog", "Cilck to Remove Fog", function(state)
+       game.Lighting.FogEnd = 100000
+game.Lighting.FogStart = 0
+game.Lighting.ClockTime = 14
+game.Lighting.Brightness = 2
+game.Lighting.GlobalShadows = false
+end)
